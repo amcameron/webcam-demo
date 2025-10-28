@@ -7,7 +7,9 @@ authors = [
     { name = "Andrew Cameron", email = "andrew@acameron.org" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "requests>=2.32.5",
+]
 
 [project.scripts]
 webcam-demo = "webcam_demo:main"
@@ -19,4 +21,5 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     "mypy>=1.18.2",
+    "types-requests>=2.32.4.20250913",
 ]
