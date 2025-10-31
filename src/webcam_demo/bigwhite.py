@@ -15,6 +15,7 @@ _digits = re.compile("[0-9]+")
 class BigWhite:
     class Webcam(Enum):
         """identifier for a specific webcam at Big White"""
+
         VillageCentre = auto()
         PowCam = auto()
         TheCliff = auto()
@@ -62,16 +63,20 @@ class BigWhite:
         response.raise_for_status()
         for webcam in BigWhite.Webcam:
             url_format = BigWhite._URL_FORMATS[webcam]
-            url_prefix = url_format[:url_format.index("{}")]
+            url_prefix = url_format[: url_format.index("{}")]
             # URLs on the index page are in site-relative form
             url_prefix = urlparse(url_prefix).path
             try:
                 image_index_position = response.text.index(url_prefix) + len(url_prefix)
             except ValueError as e:
-                raise BigWhite.BigWhiteScrapingError(f"error scraping image index for webcam: {webcam.name}") from e
+                raise BigWhite.BigWhiteScrapingError(
+                    f"error scraping image index for webcam: {webcam.name}"
+                ) from e
             image_index = _digits.match(response.text, image_index_position)
             if image_index is None:
-                raise BigWhite.BigWhiteScrapingError(f"error scraping image index for webcam: {webcam.name}")
+                raise BigWhite.BigWhiteScrapingError(
+                    f"error scraping image index for webcam: {webcam.name}"
+                )
             else:
                 BigWhite._webcam_indices[webcam] = int(image_index.group(0))
 
