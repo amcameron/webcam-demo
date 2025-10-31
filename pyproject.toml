@@ -21,7 +21,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-    "matplotlib>=3.10.7",
+    "black>=25.9.0",
     "mypy>=1.18.2",
     "types-requests>=2.32.4.20250913",
 ]
