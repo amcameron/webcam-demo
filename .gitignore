@@ -208,3 +208,9 @@ __marimo__/
 
 # PyCharm
 .idea/
+
+# Database files
+*.db
+
+# Images
+*.jpg
