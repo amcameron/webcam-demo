@@ -85,19 +85,15 @@ def update_indices(timeout: float | None = None) -> None:
         timeout = _DEFAULT_TIMEOUT_SECS
     response = requests.get(_BIG_WHITE_WEBCAM_INDEX_URL, timeout=timeout)
     response.raise_for_status()
-    print("successful response")
     with Session(engine) as session:
         for webcam in session.exec(select(BigWhiteWebcam)):
-            print(f"searching for {webcam=}")
             url_format = webcam.url_format
             url_prefix = url_format[: url_format.index("{}")]
             # URLs on the index page are in site-relative form
             url_prefix = urlparse(url_prefix).path
-            print(f"{url_prefix=}")
             try:
                 image_index_position = response.text.index(url_prefix) + len(url_prefix)
             except ValueError as e:
-                print(response.text)
                 raise BigWhiteScrapingError(
                     f"error scraping image index for webcam: {webcam.name}"
                 ) from e
